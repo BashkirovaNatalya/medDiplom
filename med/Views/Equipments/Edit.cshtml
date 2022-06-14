@@ -1,0 +1,84 @@
+﻿@model med.Models.Equipment
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Equipment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdEquipment" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Manufacturer" class="control-label"></label>
+                <input asp-for="Manufacturer" class="form-control" />
+                <span asp-validation-for="Manufacturer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SerialNumber" class="control-label"></label>
+                <input asp-for="SerialNumber" class="form-control" />
+                <span asp-validation-for="SerialNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ManufacturingYear" class="control-label"></label>
+                <input asp-for="ManufacturingYear" class="form-control" />
+                <span asp-validation-for="ManufacturingYear" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CertificateNubber" class="control-label"></label>
+                <input asp-for="CertificateNubber" class="form-control" />
+                <span asp-validation-for="CertificateNubber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CommissioningYear" class="control-label"></label>
+                <input asp-for="CommissioningYear" class="form-control" />
+                <span asp-validation-for="CommissioningYear" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DecommissioningYear" class="control-label"></label>
+                <input asp-for="DecommissioningYear" class="form-control" />
+                <span asp-validation-for="DecommissioningYear" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PeriodTO" class="control-label"></label>
+                <input asp-for="PeriodTO" class="form-control" />
+                <span asp-validation-for="PeriodTO" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EquipmentTypeId" class="control-label"></label>
+                <select asp-for="EquipmentTypeId" class="form-control" asp-items="ViewBag.EquipmentTypeId"></select>
+                <span asp-validation-for="EquipmentTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CabinetId" class="control-label"></label>
+                <select asp-for="CabinetId" class="form-control" asp-items="ViewBag.CabinetId"></select>
+                <span asp-validation-for="CabinetId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClientId" class="control-label"></label>
+                <select asp-for="ClientId" class="form-control" asp-items="ViewBag.ClientId"></select>
+                <span asp-validation-for="ClientId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

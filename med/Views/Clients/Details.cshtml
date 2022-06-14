@@ -1,0 +1,54 @@
+﻿@model med.Models.Client
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Client</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Fio)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Fio)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Organization)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Organization.IdOrganization)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ClientPosition)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ClientPosition.IdClientPosition)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ApplicationUser)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ApplicationUser.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IdClient">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

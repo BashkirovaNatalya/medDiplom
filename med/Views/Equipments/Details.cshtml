@@ -1,0 +1,132 @@
+﻿@model med.ViewModels.Equipment.EquipmentViewModel
+
+@{
+    ViewData["Title"] = "Подробнее";
+}
+
+<h1>Подробнее</h1>
+@if (User.IsInRole("Ответственный"))
+{
+    <a asp-controller="Equipments" asp-action="Create" asp-route-id="@Model.IdEquipment" class="btn btn-primary mb-1">Создать заявку</a>
+}
+<div>
+    <h4>Оборудование</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Manufacturer)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Manufacturer)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SerialNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SerialNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ManufacturingYear)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ManufacturingYear)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CertificateNubber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CertificateNubber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CommissioningYear)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CommissioningYear)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DecommissioningYear)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DecommissioningYear)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PeriodTO)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PeriodTO)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EquipmentType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EquipmentType.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cabinet)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cabinet.Number)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Client)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Client.Fio)
+        </dd>
+    </dl>
+</div>
+
+@if (Model.ApplicationList.Any())
+{
+    foreach (var app in Model.ApplicationList)
+    {
+        <div class="card mb-3">
+            <div class="card-header">
+                Тип работы: @app.Description
+            </div>
+            <div class="card-body card-title">
+                
+                    <h5>Статус: @app.ApplicationStatus.Name </h5><br></br>
+                    @if (@app.ApplicationStatus.Name == "Выполнена")
+                    {
+                       <h5>Завершена: @app.FinishDateFact </h5>
+                    }
+                    <h5>Инженер: @app.Employee.Fio , @app.Employee.PhoneNumber</h5>
+
+                 
+
+
+
+            </div>
+            <div class="card-footer">
+                    
+                <a asp-action="Edit" asp-controller="Jobs"
+                   asp-route-id="@app.IdApplication"
+                   class="btn btn-danger">Изменить</a>
+
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            Заявок с этим оборудованием не найдено.
+        </div>
+        <div class="card-body">
+        </div>
+    </div>
+}
+
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IdEquipment">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

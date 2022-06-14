@@ -1,0 +1,139 @@
+﻿@using System.Collections.Immutable
+@model med.ViewModels.Applications.ApplicationViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Подробнее</h1>
+
+
+
+<div>
+    <h4>Заявка №@Model.IdApplication</h4>
+    @if (User.IsInRole("Инженер"))
+    {
+    <a asp-controller="Jobs" asp-action="Create" asp-route-appId="@Model.IdApplication" class="btn btn-primary">Добавить работу</a>
+    }
+
+    <hr />
+
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StartDatePlan)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StartDatePlan)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StartDateFact)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StartDateFact)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FinishDatePlan)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FinishDatePlan)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FinishDateFact)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FinishDateFact)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Equipment)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Equipment.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Employee)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Employee.Fio)
+        </dd>
+        <dt class = "col-sm-2">
+            Номер инженера
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Employee.PhoneNumber)
+        </dd>
+        
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Equipment.Client)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Equipment.Client.Fio)
+        </dd>
+        <dt class = "col-sm-2">
+            Номер ответственного
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Equipment.Client.PhoneNumber)
+        </dd>
+        
+
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ApplicationStatus)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ApplicationStatus.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    
+    @if (Model.Jobs.Any())
+    {
+        foreach (var job in Model.Jobs)
+        {
+            <div class="card mb-3">
+                <div class="card-header">
+                    Тип работы: @job.JobType.Name
+                </div>
+                <div class="card-body card-title">
+                   <h5><img style="float: right;" width="500px"  src="/35267de6-9fde-4a29-ab91-588ad4b62bec_remont.jpg"/>
+                    @job.Description <br></br>
+                    @job.Cost руб.
+                   </h5> 
+
+
+
+                </div>
+                <div class="card-footer">
+                    
+                        <a asp-action="Edit" asp-controller="Jobs"
+                           asp-route-id="@job.IdJob"
+                           class="btn btn-danger">Изменить</a>
+
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="card">
+            <div class="card-header">
+                Работ пока не выполнено.
+            </div>
+            <div class="card-body">
+            </div>
+        </div>
+    }
+</div>
+
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IdApplication">Edit</a> |
+
+    <a asp-action="Index">Back to List</a>
+</div>

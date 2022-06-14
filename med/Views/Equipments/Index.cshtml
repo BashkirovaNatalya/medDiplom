@@ -1,0 +1,98 @@
+﻿@model IEnumerable<med.Models.Equipment>
+
+@{
+    ViewData["Title"] = "Оборудование";
+}
+
+<h1>Оборудование</h1>
+<form asp-action="Index" method="get" class="float-right">
+    <div class="form-actions no-color float-right">
+        <p class="float-end">
+            Поиск: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]"/>
+            <input type="submit" value="Найти" class="btn btn-primary"/>
+        </p>
+    </div>
+</form>
+@if (User.IsInRole("Администратор (контрагент)"))
+{
+
+    <a class="btn btn-primary mb-3" asp-action="Create">Добавить</a>
+
+}
+<a asp-action="ExportToExcel" asp-controller="Equipments"
+   class="btn btn-primary mb-3" style="width:auto"
+   asp-route-searchString="@ViewData["CurrentFilter"]">
+    Отчет
+</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Manufacturer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SerialNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ManufacturingYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PeriodTO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EquipmentType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cabinet.Filial.Organization)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Client)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Manufacturer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SerialNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManufacturingYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PeriodTO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EquipmentType.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cabinet.Filial.Organization.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.Fio)
+            </td>
+            <td>
+
+                <a class="btn btn-primary w-100 mt-2" asp-action="Details" asp-route-id="@item.IdEquipment">Подробнее</a>
+                @if (User.IsInRole("Администратор") || User.IsInRole("Администратор (контрагент)"))
+                {
+                    <a class="btn btn-primary w-100 mt-2" asp-action="Edit" asp-route-id="@item.IdEquipment">Изменить</a>
+                    <a class="btn btn-danger w-100 mt-2" asp-action="Delete" asp-route-id="@item.IdEquipment">Удалить</a>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

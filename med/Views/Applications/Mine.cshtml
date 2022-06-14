@@ -1,0 +1,108 @@
+﻿@model IEnumerable<med.Models.Application>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Заявки</h1>
+<form asp-action="Index" method="get" class="float-right">
+    <div class="form-actions no-color float-right">
+        <p class="float-end">
+            Поиск: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]"/>
+            <input type="submit" value="Найти" class="btn btn-primary"/>
+        </p>
+    </div>
+</form>
+@if (User.IsInRole("Ответственный"))
+{
+    <a class ="btn btn-primary mb-3 " asp-action="Create">Добавить</a>
+}
+<a asp-action="ExportToExcel" asp-controller="Administration"
+   class="btn btn-primary mb-3" style="width:auto"
+   asp-route-searchString="@ViewData["CurrentFilter"]">
+    Отчет
+</a>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Equipment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Equipment.Client)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.StartDatePlan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FinishDatePlan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ApplicationStatus)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Equipment.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Employee.Fio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Equipment.Client.Fio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDatePlan)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FinishDatePlan)
+        </td>
+        <td >
+            @Html.DisplayFor(modelItem => item.ApplicationStatus.Name)
+        </td>
+        <td>
+            @if (item.ApplicationStatus.Name == "Ожидает подтверждения" && User.IsInRole("Ответственный"))
+            {
+                <a class = "btn btn-secondary mt-1 w-100" asp-action="Edit" asp-route-id="@item.IdApplication">Подтвердить</a>
+            
+            }
+            @if (User.IsInRole("Ответственный"))
+            {
+                <a class="btn btn-primary mt-1 w-100" asp-action="Edit" asp-route-id="@item.IdApplication">Изменить</a>
+            }
+
+            @if (!(item.ApplicationStatus.Name == "Завершена"))
+            {
+                <a class = "btn btn-danger mt-1 w-100" asp-action="Edit" asp-route-id="@item.IdApplication">Отказаться</a>
+            
+            }
+
+
+            <a class="btn btn-primary mt-1 w-100" asp-action="Details" asp-route-id="@item.IdApplication">Подробнее</a>
+            @if ((User.IsInRole("Администратор (контрагент)") || User.IsInRole("Ответственный")))
+            {
+                <a class="btn btn-danger mt-1 w-100" asp-action="Delete" asp-route-id="@item.IdApplication">Удалить</a>
+            }
+            @if (User.IsInRole("Менеджер") && item.Employee == null)
+            {
+                <a class="btn btn-secondary  mt-1 w-100" asp-action="AssignApplication" asp-route-id="@item.IdApplication">Назначить</a>
+            }
+        </td>
+    </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,69 @@
+﻿@model med.ViewModels.Job.CreateJobViewModel
+
+@{
+    ViewData["Title"] = "Добавить";
+}
+
+<h1>Добавить</h1>
+
+<h4>Работа по заявке №@ViewBag.ApplicationId</h4>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control"> </textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cost" class="control-label"></label>
+                <input asp-for="Cost" class="form-control" />
+                <span asp-validation-for="Cost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDatePlan" class="control-label"></label>
+                <input asp-for="StartDatePlan" class="form-control" />
+                <span asp-validation-for="StartDatePlan" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FinishDatePlan" class="control-label"></label>
+                <input asp-for="FinishDatePlan" class="form-control" />
+                <span asp-validation-for="FinishDatePlan" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="JobTypeId" class="control-label"></label>
+                <select asp-for="JobTypeId" class ="form-control" asp-items="ViewBag.JobTypeId"></select>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="IsCompleted" ></label>
+                <input asp-for="IsCompleted" class="form-check-input" />
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="Photos" class="control-label custom-file-label"></label>
+                <input asp-for="Photos" class="form-control" />
+                <span asp-validation-for="Photos" class="text-danger custom-file-input"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" asp-route-appId="@ViewBag.ApplicationId" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
